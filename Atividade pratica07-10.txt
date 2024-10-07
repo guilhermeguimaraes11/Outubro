@@ -52,30 +52,63 @@ insert into organizador (nome, email, senha, telefone) values
 
 create table evento (
 	id_evento int auto_increment primary key,
-	nome_evento varchar(100) not null, 
-	data_evento datetime not null,
-	local_evento varchar(100) not null,
+	nome varchar(100) not null, 
+	data datetime not null,
+	local varchar(100) not null,
 	descricao varchar(255) not null,
-	id_organizador int not null
+	id_organizador int not null,
+	foreign key (id_organizador) references organizador (id_organizador
 );
 
-insert into evento (nome, data, local, organizador) values 
-('Festival de Verão', '2024-12-15', 'Praia Central', 'Organização ABC'),
-('Congresso de Tecnologia', '2024-11-20', 'Centro de Convenções', 'Eventos XYZ'),
-('Show Internacional', '2024-10-30', 'Arena Principal', 'Festivais BR');
+insert into evento (nome, data, local, descricao ,id_organizador) values 
+('Festival de Verão', '2024-12-15', 'Praia Central', 'festival no calor', '1'),
+('Congresso de Tecnologia', '2024-11-20', 'Centro de Convenções', 'experiencia tecnologica', '2'),
+('Show Internacional', '2024-10-30', 'Arena Principal', 'show do travis', '3');
 
-create table ingresso (
-	id_ingresso int auto_increment primary key, 
-	tipo (vip, pista) varchar(100) not null,
-	preco decimal (5,2) not null,
-	id_evento int not null
-);
+create table ingresso(
+	id_ingresso int primary key auto_increment,
+	tipo_ingresso char(10) not null,
+	preco_ingresso decimal(5,2) not null,
+	fkid_evento int not null,
+	foreign key (fkid_evento) references evento(id_evento));
 
-insert into ingresso (tipo, preço,
 
-		
+insert into ingresso (tipo_ingresso, preco_ingresso, fkid_evento) values
+	('vip','500',1),
+	('pista','150',1),
+	('pista','200',2),
+	('vip','600',3),
+	('pista','250',3);
 
+update ingresso
+	set preco = preco * 1.10
+	where id_evento =  'Show Internacional';
 	
 
+delete from ingresso 	
+	where id_evento = 'Congresso de Tecnologia'
+
+select * from usuario;
+	where data_nascimento between '1990-01-01' and ' 1995-12-31'
+	order by data_nascimento
+
+update organizador
+	set telefone = '11222333444'
+	where email like 'xyz.com';
+
+select nome, data
+	from evento 
+	where id_organizador = '3'
+
+
+create table compra (
+	id_compra int auto_increment primary key,
+	data_compra datetime not null,
+	fkid_usuario int not null,
+	foreign key (fkid_usuario) references usuario(id_usuario));
+
+create table ingresso_compra (
+	
+	
   
 	
